@@ -1,5 +1,5 @@
 import re
-from flask import Flask
+from flask import Flask, render_template
 from flask_restful import reqparse, Resource, Api
 
 app = Flask(__name__)
@@ -53,7 +53,7 @@ api.add_resource(Person, "/person/<int:person_id>")
 # Static content and application launcher
 @app.route("/")
 def home():
-   return "Homepage"
+   return render_template("home.html")
 
 if __name__ == "__main__":
    app.run()
