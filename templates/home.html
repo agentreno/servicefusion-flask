@@ -1,10 +1,12 @@
 <!doctype html>
-<html>
+<html ng-app="PeopleApp">
    <head>
       <title>Person CRUD</title>
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css">
       <link rel="stylesheet" href="/static/main.css">
       <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js"></script>
+      <script src="/static/js/app.js"></script>
    </head>
    <body>
       <div class="ui inverted vertical masthead center aligned segment">
@@ -15,28 +17,26 @@
          </div>
       </div>
 
-      <div class="ui inverted grey segment">
+      {% raw %}
+      <div class="ui inverted grey segment" ng-controller="PeopleController as pc">
          <div class="ui centered cards">
-            <div class="card">
+            <div class="card" ng-repeat="person in pc.people">
                <div class="image">
-                  <img src="/static/images/daniel.jpg">
+                  <img src="{{person.image}}">
                </div>
                <div class="content">
-                  <div class="header">Karl Hopkinson-Turrell</div>
-                  <div class="description">Karl is on holiday!</div>
-               </div>
-            </div>
-            <div class="card">
-               <div class="image">
-                  <img src="/static/images/jenny.jpg">
-               </div>
-               <div class="content">
-                  <div class="header">Jenny</div>
-                  <div class="description">Jenny is also on holiday!</div>
+                  <div class="header">
+                     {{person.firstname}} {{person.lastname}}
+                  </div>
+                  <div class="description">
+                     {{person.firstname}} was born on {{person.dateofbirth}}. 
+                     They live at zipcode {{person.zipcode}}.
+                  </div>
                </div>
             </div>
          </div>
       </div>
+      {% endraw %}
 
    </body>
 </html>
