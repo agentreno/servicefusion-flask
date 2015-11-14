@@ -4,25 +4,63 @@
       <title>Person CRUD</title>
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css">
       <link rel="stylesheet" href="/static/main.css">
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
       <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.min.js"></script>
       <script src="/static/js/app.js"></script>
    </head>
-   <body>
+   <body ng-controller="PeopleController as pc">
       <div class="ui inverted vertical masthead center aligned segment">
          <div class="ui text container">
             <h1 class="ui inverted header">
                People CRUD
             </h1>
          </div>
+         <div class="ui container">
+            <button class="ui green button" ng-click="pc.showModal()">
+               <i class="icon user"></i>
+               Add Person
+            </button>
+         </div>
+      </div>
+
+      <div class="ui small modal">
+         <div class="header">
+            Add a person...
+         </div>
+         <div class="content">
+            <form class="ui form" ng-submit="pc.addPerson(pc.newperson)">
+               <div class="field">
+                  <label>First Name</label>
+                  <input name="firstname" placeholder="First Name" type="text"
+                     ng-model="pc.newperson.firstname">
+               </div>
+               <div class="field">
+                  <label>Last Name </label>
+                  <input name="lastname" placeholder="Last Name" type="text"
+                     ng-model="pc.newperson.lastname">
+               </div>
+               <div class="field">
+                  <label>Date of Birth</label>
+                  <input name="dateofbirth" placeholder="dd/mm/yyyy" type="text"
+                     ng-model="pc.newperson.dateofbirth">
+               </div>
+               <div class="field">
+                  <label>Zip Code</label>
+                  <input name="zipcode" placeholder="12345" type="text"
+                     ng-model="pc.newperson.zipcode">
+               </div>
+               <input class="ui button" type="submit" value="Submit">
+            </form>
+         </div>
       </div>
 
       {% raw %}
-      <div class="ui inverted grey segment" ng-controller="PeopleController as pc">
+      <div class="ui inverted grey segment">
          <div class="ui centered cards">
             <div class="card" ng-repeat="person in pc.people">
                <div class="image">
-                  <img src="{{person.image}}">
+                  <img ng-src="{{person.image}}">
                </div>
                <div class="content">
                   <div class="header">
