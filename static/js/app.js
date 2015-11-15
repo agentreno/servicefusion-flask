@@ -28,4 +28,11 @@ angular.module("PeopleApp", [])
       self.people.push(newperson);
       console.log(self.people);
    };
+
+   self.deletePerson = function(person){
+      var index = self.people.indexOf(person);
+      if(index > -1){
+         self.people.splice(index, 1);
+      }
+   };
 }]);

@@ -59,7 +59,18 @@
       <div class="ui inverted grey segment">
          <div class="ui centered cards">
             <div class="card" ng-repeat="person in pc.people">
-               <div class="image">
+               <div class="blurring dimmable image" ng-class="{dimmed: hover}"
+                  ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+                  <div class="ui simple dimmer">
+                     <div class="content">
+                        <div class="center">
+                           <button class="ui inverted red button" 
+                              ng-click="pc.deletePerson(person)">
+                              Delete Person
+                           </button>
+                        </div>
+                     </div>
+                  </div>
                   <img ng-src="{{person.image}}">
                </div>
                <div class="content">
