@@ -19,14 +19,14 @@
             </h1>
          </div>
          <div class="ui container">
-            <button class="ui green button" ng-click="pc.showModal()">
+            <button class="ui green button" ng-click="pc.showAddModal()">
                <i class="icon user"></i>
                Add Person
             </button>
          </div>
       </div>
 
-      <div class="ui small modal">
+      <div class="ui small modal" id="addModal">
          <div class="header">
             Add a person...
          </div>
@@ -56,6 +56,36 @@
             </form>
          </div>
       </div>
+      <div class="ui small modal" id="updateModal">
+         <div class="header">
+            Update a person...
+         </div>
+         <div class="content">
+            <form class="ui form" ng-submit="pc.updatePerson()">
+               <div class="field">
+                  <label>First Name</label>
+                  <input name="firstname" placeholder="First Name" type="text"
+                     ng-model="pc.editperson.firstname">
+               </div>
+               <div class="field">
+                  <label>Last Name </label>
+                  <input name="lastname" placeholder="Last Name" type="text"
+                     ng-model="pc.editperson.lastname">
+               </div>
+               <div class="field">
+                  <label>Date of Birth</label>
+                  <input name="dateofbirth" placeholder="dd/mm/yyyy" type="text"
+                     ng-model="pc.editperson.dateofbirth">
+               </div>
+               <div class="field">
+                  <label>Zip Code</label>
+                  <input name="zipcode" placeholder="12345" type="text"
+                     ng-model="pc.editperson.zipcode">
+               </div>
+               <input class="ui button" type="submit" value="Submit">
+            </form>
+         </div>
+      </div>
 
       {% raw %}
       <div class="ui inverted grey segment">
@@ -66,6 +96,10 @@
                   <div class="ui simple dimmer">
                      <div class="content">
                         <div class="center">
+                           <button class="ui inverted blue button"
+                              ng-click="pc.showUpdateModal(person)">
+                              Update Person
+                           </button>
                            <button class="ui inverted red button" 
                               ng-click="pc.deletePerson(person)">
                               Delete Person

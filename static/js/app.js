@@ -15,17 +15,31 @@ angular.module("PeopleApp", ["restangular"])
 .controller("PeopleController", ["PeopleService", function(PeopleService){
    var self = this;
    self.people = PeopleService.all();
+   self.editperson = null;
 
-   self.showModal = function(){
-      $(".ui.small.modal").modal("show");
+   self.showAddModal = function(){
+      $("#addModal").modal("show");
+   };
+
+   self.showUpdateModal = function(person){
+      var index = self.people.indexOf(person);
+      self.people.splice(index, 1);
+      self.editperson = person;
+      $("#updateModal").modal("show");
    };
 
    self.addPerson = function(newperson){
-      $(".ui.small.modal").modal("hide");
+      $("#addModal").modal("hide");
       newperson.image = "/static/images/jenny.jpg";
       self.people.push(newperson);
       PeopleService.post(newperson);
    };
+
+   self.updatePerson = function(){
+      $("#updateModal").modal("hide");
+      self.people.push(self.editperson);
+      self.editperson.save();
+   }
 
    self.deletePerson = function(person){
       var index = self.people.indexOf(person);
