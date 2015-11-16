@@ -12,8 +12,16 @@ def valid_zipcode(value):
    return value
 
 # Parsers and internal data structures
-people = {}
-pid = 1
+people = {
+   "1": {
+      "firstname": "Karl", 
+      "lastname": "Hopkinson-Turrell", 
+      "dateofbirth": "31/08/87", 
+      "zipcode": "12345", 
+      "image": "/static/images/daniel.jpg"
+   }
+}
+pid = 2
 parser = reqparse.RequestParser()
 parser.add_argument("firstname", required=True)
 parser.add_argument("lastname", required=True)
@@ -32,7 +40,12 @@ class Person(Resource):
 
 class PersonList(Resource):
    def get(self):
-      return people
+      outlist = []
+      for (key, val) in people.items():
+         person = val
+         person["id"] = key
+         outlist.append(person)
+      return outlist
 
    def post(self):
       global pid
@@ -43,12 +56,13 @@ class PersonList(Resource):
          "firstname": args["firstname"],
          "lastname": args["lastname"],
          "dateofbirth": args["dateofbirth"],
-         "zipcode": args["zipcode"]
+         "zipcode": args["zipcode"],
+         "image": "/static/images/jenny.jpg"
       }
       return people[person_id], 201
 
-api.add_resource(PersonList, "/persons")
-api.add_resource(Person, "/person/<int:person_id>")
+api.add_resource(PersonList, "/people")
+api.add_resource(Person, "/people/<int:person_id>")
 
 # Static content and application launcher
 @app.route("/")
