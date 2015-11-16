@@ -13,7 +13,7 @@ def valid_zipcode(value):
 
 # Parsers and internal data structures
 people = {
-   "1": {
+   1: {
       "firstname": "Karl", 
       "lastname": "Hopkinson-Turrell", 
       "dateofbirth": "31/08/87", 
@@ -34,8 +34,11 @@ class Person(Resource):
       return {person_id: people[person_id]}
 
    def delete(self, person_id):
-      del people[person_id]
-      return '', 204
+      if person_id in people.keys():
+         del people[person_id]
+         return '', 204
+      else:
+         return '', 404
 
 
 class PersonList(Resource):
