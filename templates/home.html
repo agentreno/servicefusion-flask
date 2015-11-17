@@ -4,12 +4,6 @@
       <title>Person CRUD</title>
       <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.css">
       <link rel="stylesheet" href="/static/main.css">
-      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
-      <script src="//cdnjs.cloudflare.com/ajax/libs/restangular/1.5.1/restangular.js"></script>
-      <script src="/static/js/app.js"></script>
    </head>
    <body ng-controller="PeopleController as pc">
       <div class="ui inverted vertical masthead center aligned segment">
@@ -31,26 +25,29 @@
             Add a person...
          </div>
          <div class="content">
-            <form class="ui form" ng-submit="pc.addPerson(pc.newperson)">
-               <div class="field">
+            <form class="ui form" name="addform"
+               ng-submit="addform.$valid && pc.addPerson(pc.newperson)">
+               <div class="field" apply-error-on-invalid>
                   <label>First Name</label>
                   <input name="firstname" placeholder="First Name" type="text"
-                     ng-model="pc.newperson.firstname">
+                     ng-model="pc.newperson.firstname" required autofocus>
                </div>
-               <div class="field">
+               <div class="field" apply-error-on-invalid>
                   <label>Last Name </label>
                   <input name="lastname" placeholder="Last Name" type="text"
-                     ng-model="pc.newperson.lastname">
+                     ng-model="pc.newperson.lastname" required>
                </div>
-               <div class="field">
+               <div class="field" apply-error-on-invalid>
                   <label>Date of Birth</label>
                   <input name="dateofbirth" placeholder="dd/mm/yyyy" type="text"
-                     ng-model="pc.newperson.dateofbirth">
+                     ng-model="pc.newperson.dateofbirth" required>
                </div>
-               <div class="field">
+               <div class="field" apply-error-on-invalid>
                   <label>Zip Code</label>
                   <input name="zipcode" placeholder="12345" type="text"
-                     ng-model="pc.newperson.zipcode">
+                     ng-model="pc.newperson.zipcode" required
+                     ng-pattern="pc.zipcoderegex" ng-model-options="{updateOn: 'blur'}"
+                     title="zip codes must be formatted as 12345 or 12345-6789">
                </div>
                <input class="ui button" type="submit" value="Submit">
             </form>
@@ -61,26 +58,29 @@
             Update a person...
          </div>
          <div class="content">
-            <form class="ui form" ng-submit="pc.updatePerson()">
-               <div class="field">
+            <form class="ui form" name="updateform"
+               ng-submit="updateform.$valid && pc.updatePerson()">
+               <div class="field" apply-error-on-invalid>
                   <label>First Name</label>
                   <input name="firstname" placeholder="First Name" type="text"
-                     ng-model="pc.editperson.firstname">
+                     ng-model="pc.editperson.firstname" required autofocus>
                </div>
-               <div class="field">
+               <div class="field" apply-error-on-invalid>
                   <label>Last Name </label>
                   <input name="lastname" placeholder="Last Name" type="text"
-                     ng-model="pc.editperson.lastname">
+                     ng-model="pc.editperson.lastname" required>
                </div>
-               <div class="field">
+               <div class="field" apply-error-on-invalid>
                   <label>Date of Birth</label>
                   <input name="dateofbirth" placeholder="dd/mm/yyyy" type="text"
-                     ng-model="pc.editperson.dateofbirth">
+                     ng-model="pc.editperson.dateofbirth" required>
                </div>
-               <div class="field">
+               <div class="field" apply-error-on-invalid>
                   <label>Zip Code</label>
                   <input name="zipcode" placeholder="12345" type="text"
-                     ng-model="pc.editperson.zipcode">
+                     ng-model="pc.editperson.zipcode" required
+                     ng-pattern="pc.zipcoderegex" ng-model-options="{updateOn: 'blur'}"
+                     title="zip codes must be formatted as 12345 or 12345-6789">
                </div>
                <input class="ui button" type="submit" value="Submit">
             </form>
@@ -123,5 +123,12 @@
       </div>
       {% endraw %}
 
+
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-alpha1/jquery.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.1.6/semantic.min.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.1/angular.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore.js"></script>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/restangular/1.5.1/restangular.js"></script>
+      <script src="/static/js/app.js"></script>
    </body>
 </html>

@@ -16,6 +16,7 @@ angular.module("PeopleApp", ["restangular"])
    var self = this;
    self.people = PeopleService.all();
    self.editperson = null;
+   self.zipcoderegex = /^[0-9]{5}(?:-[0-9]{4})?$/;
 
    self.showAddModal = function(){
       $("#addModal").modal("show");
@@ -46,6 +47,20 @@ angular.module("PeopleApp", ["restangular"])
       if(index > -1){
          PeopleService.one(self.people[index].id).remove();
          self.people.splice(index, 1);
+      }
+   };
+}])
+.directive("applyErrorOnInvalid", ["$compile", function($compile){
+   return {
+      compile: function($element, $attrs){
+         var formname = $element.parent("form").attr("name");
+         var fieldname = $element.find("input").attr("name");
+         $attrs.$set("ng-class", "{error: " + formname + "." + fieldname +
+            ".$invalid && " + formname + "." + fieldname + ".$dirty }");
+         $element.removeAttr("apply-error-on-invalid");
+         return function($scope, $element){
+            $compile($element)($scope);
+         }
       }
    };
 }]);
