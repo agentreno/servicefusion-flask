@@ -33,38 +33,32 @@ parser.add_argument("lastname", required=True)
 parser.add_argument("dateofbirth", required=True)
 parser.add_argument("zipcode", type=valid_zipcode, required=True)
 
-# Temporary decorator to allow database update
-def updateDB(func):
-   def deco(self):
-      people = json.loads(redisconn.get("db"))
-      func(self)
-      redisconn.set("db", json.dumps(people))
-   return deco
-
 # REST API resources
 class Person(Resource):
-   @updateDB
    def get(self, person_id):
+      people = json.loads(redisconn.get("db"))
       return {person_id: people[person_id]}
 
-   @updateDB
    def put(self, person_id):
+      people = json.loads(redisconn.get("db"))
       if person_id in people.keys():
          people[int(person_id)] = request.json
+         redisconn.set("db", json.dumps(people))
          return {person_id: people[person_id]}
 
-   @updateDB
    def delete(self, person_id):
+      people = json.loads(redisconn.get("db"))
       if person_id in people.keys():
          del people[person_id]
+         redisconn.set("db", json.dumps(people))
          return '', 204
       else:
          return '', 404
 
 
 class PersonList(Resource):
-   @updateDB
    def get(self):
+      people = json.loads(redisconn.get("db"))
       outlist = []
       for (key, val) in people.items():
          person = val
@@ -72,9 +66,9 @@ class PersonList(Resource):
          outlist.append(person)
       return outlist
 
-   @updateDB
    def post(self):
       global pid
+      people = json.loads(redisconn.get("db"))
       args = parser.parse_args()
       person_id = pid
       pid += 1
@@ -85,6 +79,7 @@ class PersonList(Resource):
          "zipcode": args["zipcode"],
          "image": "/static/images/jenny.jpg"
       }
+      redisconn.set("db", json.dumps(people))
       return people[person_id], 201
 
 api.add_resource(PersonList, "/people")
