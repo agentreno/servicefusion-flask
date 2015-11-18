@@ -51,15 +51,15 @@ class Person(Resource):
 
    def put(self, person_id):
       refreshFromDB()
-      if person_id in people.keys():
-         people[int(person_id)] = request.json
+      if str(person_id) in people.keys():
+         people[str(person_id)] = request.json
          updateDB()
          return {person_id: people[person_id]}
 
    def delete(self, person_id):
       refreshFromDB()
-      if person_id in people.keys():
-         del people[person_id]
+      if str(person_id) in people.keys():
+         del people[str(person_id)]
          updateDB()
          return '', 204
       else:
@@ -82,7 +82,7 @@ class PersonList(Resource):
       args = parser.parse_args()
       person_id = pid
       pid += 1
-      people[person_id] = {
+      people[str(person_id)] = {
          "firstname": args["firstname"],
          "lastname": args["lastname"],
          "dateofbirth": args["dateofbirth"],
@@ -90,7 +90,7 @@ class PersonList(Resource):
          "image": "/static/images/jenny.jpg"
       }
       updateDB()
-      return people[person_id], 201
+      return people[str(person_id)], 201
 
 api.add_resource(PersonList, "/people")
 api.add_resource(Person, "/people/<int:person_id>")
