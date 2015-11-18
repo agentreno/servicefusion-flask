@@ -40,6 +40,9 @@ def refreshFromDB():
    redisconn = redis.from_url(os.environ.get("REDIS_URL"))
    people = json.loads(redisconn.get("db"))
 
+# Add test data to the database
+updateDB()
+
 # REST API resources
 class Person(Resource):
    def get(self, person_id):
