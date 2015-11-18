@@ -34,15 +34,12 @@ parser.add_argument("dateofbirth", required=True)
 parser.add_argument("zipcode", type=valid_zipcode, required=True)
 
 # Temporary decorator to allow database update
-class updateDB():
-   def __init__(self, func):
-      self.func = func
-
-   def __call__(self):
-      global people, redisconn
+def updateDB(func):
+   def deco(self):
       people = json.loads(redisconn.get("db"))
-      self.func()
+      func(self)
       redisconn.set("db", json.dumps(people))
+   return deco
 
 # REST API resources
 class Person(Resource):
